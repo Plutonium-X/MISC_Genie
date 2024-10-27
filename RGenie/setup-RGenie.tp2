@@ -1,0 +1,82 @@
+BACKUP ~RGenie/backup~
+AUTHOR ~dragon@blackwyrmlair.net~
+
+ALWAYS
+	ACTION_DEFINE_ARRAY dr_reload BEGIN
+	~setup RGenie.tra~
+	END
+	ACTION_DEFINE_ARRAY dr_noconvert BEGIN END
+	LAF HANDLE_CHARSETS
+		INT_VAR
+		infer_charset = 1
+		STR_VAR
+		tra_path = EVAL ~%MOD_FOLDER%/tra~
+		noconvert_array = dr_noconvert
+		reload_array = dr_reload
+	END
+END
+
+AUTO_TRA ~RGenie/tra/%s~
+
+LANGUAGE ~English~ ~english~ ~RGenie/tra/english/setup RGenie.tra~
+LANGUAGE ~EspaÒol~ ~spanish~ ~RGenie/tra/spanish/setup RGenie.tra~
+LANGUAGE ~ê„··™®©~ ~russian~ ~RGenie/tra/russian/setup RGenie.tra~
+LANGUAGE ~Czech~   ~czech~   ~RGenie/tra/czech/setup RGenie.tra~
+LANGUAGE ~Polish~  ~polish~  ~RGenie/tra/polish/setup RGenie.tra~
+LANGUAGE ~Italian~  ~italian~  ~RGenie/tra/italian/setup RGenie.tra~
+LANGUAGE ~German~  ~german~  ~RGenie/tra/german/setup RGenie.tra~
+LANGUAGE ~French~  ~french~  ~RGenie/tra/french/setup RGenie.tra~
+
+
+BEGIN @0
+
+INCLUDE ~RGenie/baf/GW_BGEE.tpa~
+
+APPEND ~TRIGGER.IDS~ ~0x40D5 ActuallyInCombat()~ UNLESS
+~0x40D5 ActuallyInCombat()~
+
+APPEND ~ACTION.IDS~ ~181 ReallyForceSpellRES(S:RES*,O:Target)~ UNLESS
+~181 ReallyForceSpellRES(S:RES~
+
+CLEAR_IDS_MAP
+
+COMPILE ~RGenie/D/DRRIBALD.D~
+~RGenie/D/DRGENIE.D~
+~RGenie/D/DRINVGW.D~
+USING ~~
+
+COMPILE ~RGenie/baf/DRGENIE.baf~
+~RGenie/baf/DRINVGW.baf~
+USING ~~
+
+
+COPY ~RGenie/cre/DRGENIE.cre~ ~override/DRGENIE.cre~
+SAY NAME1 @0
+SAY NAME2 @0
+
+
+COPY ~RGenie/eff/drsumgen.eff~ ~override/drsumgen.eff~
+~RGenie/M0592L.bmp~ ~override/M0592L.bmp~
+~RGenie/M0592S.bmp~ ~override/M0592S.bmp~
+~RGenie/itm/DRRGIV.bam~ ~override/DRRGIV.bam~
+~RGenie/itm/DRRGID.bam~ ~override/DRRGID.bam~
+~RGenie/vcc/DRRGPOR.bam~ ~override/DRRGPOR.bam~
+~RGenie/vcc/drgportv.vvc~ ~override/drgportv.vvc~
+~RGenie/spl/drsprggw.spl~ ~override/drsprggw.spl~
+~RGenie/spl/drsprgg2.spl~ ~override/drsprgg2.spl~
+~RGenie/spl/drsprgg3.spl~ ~override/drsprgg3.spl~
+~RGenie/spl/drsprgg4.spl~ ~override/drsprgg4.spl~
+~RGenie/sto/BERNPOTR.sto~ ~override/BERNPOTR.sto~
+
+
+COPY~RGenie/cre/DRINVGW.cre~ ~override/DRINVGW.cre~
+SAY NAME1 @1
+SAY NAME2 @1
+
+
+COPY ~RGenie/itm/drrgitm.itm~ ~override/drrgitm.itm~
+SAY NAME2 @2
+LPF ~GW_EE~ STR_VAR GW_desc_to_update = "@3" END
+
+
+AT_INTERACTIVE_EXIT ~VIEW RGenie/RGenie-readme.txt~
