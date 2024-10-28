@@ -14,13 +14,17 @@ ALWAYS
 		noconvert_array = dr_noconvert
 		reload_array = dr_reload
 	END
-	ACTION_IF GAME_IS ~eet~ BEGIN
-		OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
-		OUTER_SET bg2_chapter = bg2_chapter + 1
-		OUTER_SPRINT name_source ~bg2_chapter_%i%~
-		OUTER_SET EVAL ~%name_source%~ = bg2_chapter
-	END
-  END
+	/* eet compatibility */
+		ACTION_IF (is_eet) BEGIN
+			OUTER_SET bg2_chapter = 12
+		END ELSE BEGIN
+			OUTER_SET bg2_chapter = 0
+		END
+		OUTER_FOR (i = 1 ; i <= 10 ; ++i) BEGIN
+			OUTER_SET bg2_chapter = bg2_chapter + 1
+			OUTER_SPRINT name_source ~bg2_chapter_%i%~
+			OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+		END
 END
 
 AUTO_TRA ~RGenie/tra/%s~
