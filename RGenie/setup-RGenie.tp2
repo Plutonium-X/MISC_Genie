@@ -1,5 +1,6 @@
 BACKUP ~RGenie/backup~
 AUTHOR ~dragon@blackwyrmlair.net~
+VERSION ~3~
 
 ALWAYS
 	ACTION_DEFINE_ARRAY dr_reload BEGIN
@@ -14,17 +15,13 @@ ALWAYS
 		noconvert_array = dr_noconvert
 		reload_array = dr_reload
 	END
-	/* eet compatibility */
-		ACTION_IF (is_eet) BEGIN
-			OUTER_SET bg2_chapter = 12
-		END ELSE BEGIN
-			OUTER_SET bg2_chapter = 0
-		END
-		OUTER_FOR (i = 1 ; i <= 10 ; ++i) BEGIN
-			OUTER_SET bg2_chapter = bg2_chapter + 1
-			OUTER_SPRINT name_source ~bg2_chapter_%i%~
-			OUTER_SET EVAL ~%name_source%~ = bg2_chapter
-		END
+	ACTION_IF GAME_IS ~EET~ BEGIN
+		OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
+		OUTER_SET bg2_chapter = bg2_chapter + 1
+		OUTER_SPRINT name_source ~bg2_chapter_%i%~
+		OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+	END
+  END
 END
 
 AUTO_TRA ~RGenie/tra/%s~
@@ -41,7 +38,7 @@ LANGUAGE ~French~  ~french~  ~RGenie/tra/french/setup RGenie.tra~
 
 BEGIN @0
 
-INCLUDE ~RGenie/baf/GW_BGEE.tpa~
+INCLUDE ~RGenie/baf/gw_functions.tpa~
 
 APPEND ~TRIGGER.IDS~ ~0x40D5 ActuallyInCombat()~ UNLESS
 ~0x40D5 ActuallyInCombat()~
@@ -87,7 +84,7 @@ SAY NAME2 @1
 
 COPY ~RGenie/itm/drrgitm.itm~ ~override/drrgitm.itm~
 SAY NAME2 @2
-LPF ~GW_EE~ STR_VAR GW_desc_to_update = "@3" END
+LPF ~GW_WRITE_EE_ITM_DESCRIPTIONS~ STR_VAR GW_desc_to_update = "3" END
 
 
 AT_INTERACTIVE_EXIT ~VIEW RGenie/RGenie-readme.txt~
