@@ -1,4 +1,6 @@
-Ribald's Genie v3.0
+Ribald's Genie v3.1
+
+Version 3.1 fix the Copper Coronet bug.
 
 Version 3.0 fix the GW fonction.
 

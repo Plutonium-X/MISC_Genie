@@ -1,6 +1,6 @@
 BACKUP ~RGenie/backup~
 AUTHOR ~dragon@blackwyrmlair.net~
-VERSION ~3~
+VERSION ~3.1~
 
 ALWAYS
 	ACTION_DEFINE_ARRAY dr_reload BEGIN
@@ -61,6 +61,9 @@ USING ~~
 COPY ~RGenie/cre/DRGENIE.cre~ ~override/DRGENIE.cre~
 SAY NAME1 @0
 SAY NAME2 @0
+
+COPY_EXISTING ~bernard.sto~ ~override/DRBERN1.sto~
+			  ~bernard2.sto~ ~override/DRBERN2.sto~	WRITE_LONG 0x5c 0
 
 
 COPY ~RGenie/eff/drsumgen.eff~ ~override/drsumgen.eff~
